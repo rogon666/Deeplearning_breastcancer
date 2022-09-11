@@ -11,7 +11,7 @@ import featurewiz as FW
 import numpy as np
 
 #%% data source route
-db_source = '~/GitHub/Deeplearning_breastcancer/data/'
+db_source = 'Z:/GitHub/Deeplearning_breastcancer/data/'
 
 #%%############################################################################
 ############## Part I: Feature selection and feature engineering ##############
@@ -51,15 +51,15 @@ dfz.breastcancer = df.breastcancer
 
 #%% Feature selection
 # Recursive loop to choose a correlation threshold:
-features = []
-for tau in range(1, 99, 1):
-    f, fdf = FW.featurewiz(dfz,'breastcancer', corr_limit=tau/100, verbose=0,  
-        header=0, test_data='',feature_engg='', category_encoders='',
-        dask_xgboost_flag=False)
-    features.append(f)
-fr = pd.DataFrame(features) 
-#saving the dataframe 
-fr.to_csv('features.csv') 
+# features = []
+# for tau in range(1, 99, 1):
+#     f, fdf = FW.featurewiz(dfz,'breastcancer', corr_limit=tau/100, verbose=0,  
+#         header=0, test_data='',feature_engg='', category_encoders='',
+#         dask_xgboost_flag=False)
+#     features.append(f)
+# fr = pd.DataFrame(features) 
+# #saving the dataframe 
+# fr.to_csv('features.csv') 
 
 # Subset of relevant variables:
 tau  = 0.30 # correlation threshold, variables v between -tau < v < tau will be removed
@@ -73,7 +73,7 @@ fs, fds = FW.featurewiz(dfz,'breastcancer', corr_limit=tau, verbose=2, sep=',',
 fds.drop(['Age'], axis=1, inplace = True)
 
 # Feature engineering:
-fsi, fdi = FW.featurewiz(fds,'breastcancer', corr_limit=.4, verbose=2, sep=',', 
+fsi, fdi = FW.featurewiz(fds,'breastcancer', corr_limit=.5, verbose=2, sep=',', 
         header=0, test_data='',feature_engg='interactions', category_encoders='',
         dask_xgboost_flag=False)
 
